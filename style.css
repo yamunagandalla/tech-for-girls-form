@@ -1,0 +1,200 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Segoe UI', sans-serif;
+}
+
+body {
+  background: #0d1117;
+  color: #f0f0f0;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 40px;
+}
+
+/* 🔲 Form Container */
+.container {
+  background: rgba(18, 24, 38, 0.85);
+  border: 1px solid #2c2f36;
+  border-radius: 16px;
+  box-shadow: 0 0 25px rgba(0, 255, 255, 0.1);
+  padding: 40px 35px;
+  max-width: 700px;
+  width: 100%;
+  backdrop-filter: blur(10px);
+  transition: 0.3s ease;
+  animation: fadeIn 0.5s ease-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+h1 {
+  text-align: center;
+  font-size: 1.8rem;
+  color: #ffffff;
+  margin-bottom: 25px;
+  background: linear-gradient(90deg, #7f5af0, #2cb67d);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* 🧾 Form Fields */
+.form-group {
+  margin-bottom: 20px;
+  size: 100%;
+}
+
+label {
+  display: block;
+  font-weight: 600;
+  margin-bottom: 8px;
+  color: #dcdcdc;
+}
+
+input[type="text"],
+input[type="number"],
+input[type="email"],
+input[type="file"] {
+  width: 100%;
+  padding: 12px 14px;
+  border: 2px solid #2c2f36;
+  border-radius: 12px;
+  background: #161b22;
+  color: #e0e0e0;
+  font-size: 1rem;
+  transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+input:focus {
+  outline: none;
+  border-color: #7f5af0;
+  box-shadow: 0 0 6px #7f5af0;
+}
+
+/* ⚡ Button Base Style */
+button {
+  width: 100%;
+  padding: 14px;
+  font-size: 1rem;
+  font-weight: 600;
+  border-radius: 14px;
+  border: none;
+  cursor: pointer;
+  transition: 0.4s ease;
+  margin-top: 8px;
+}
+
+/* 🔘 Share Button */
+#shareBtn {
+  background: linear-gradient(90deg, #52ff26, #2cb67d);
+  color: #0cee2a;
+}
+
+#shareBtn:hover {
+  transform: scale(1.04);
+  box-shadow: 0 0 12px #7f5af0;
+}
+
+/* 🚀 Submit Button */
+#submitBtn {
+  background: linear-gradient(90deg, #cc5252, #ff884d);
+  color: white;
+}
+
+#submitBtn:hover {
+  transform: scale(1.04);
+  box-shadow: 0 0 15px #ff4d4d;
+}
+
+#submitBtn:disabled {
+  background: #333;
+  color: #888;
+  cursor: not-allowed;
+}
+
+/* 🧮 Click Counter */
+#clickCounter {
+  margin-top: 10px;
+  text-align: center;
+  font-size: 0.95rem;
+  color: #aaa;
+}
+
+/* 🎉 Thank You Message */
+.thank-you {
+  margin-top: 25px;
+  text-align: center;
+  font-size: 1.1rem;
+  color: #2cb67d;
+  font-weight: bold;
+  animation: popIn 0.4s ease;
+}
+
+@keyframes popIn {
+  0% {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* 📱 Responsive */
+@media (max-width: 480px) {
+  .container {
+    padding: 30px 20px;
+  }
+
+  h1 {
+    font-size: 1.5rem;
+  }
+}
+/* Prevent white background when autofilled (Chrome/Safari/Edge) */
+input:-webkit-autofill {
+  background-color: #161b22 !important;
+  color: #e0e0e0 !important;
+  -webkit-box-shadow: 0 0 0px 1000px #161b22 inset !important;
+  caret-color: #ffffff;
+}
+
+/* Firefox autofill override */
+input:-moz-autofill {
+  background-color: #161b22 !important;
+  color: #e0e0e0 !important;
+  box-shadow: 0 0 0px 1000px #161b22 inset !important;
+  caret-color: #ffffff;
+}
+/* Autofill Fix - Chrome/Safari */
+input:-webkit-autofill,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:active {
+  -webkit-box-shadow: 0 0 0px 1000px #161b22 inset !important;
+  -webkit-text-fill-color: #e0e0e0 !important;
+  background-color: #161b22 !important;
+  transition: background-color 5000s ease-in-out 0s;
+  caret-color: #ffffff;
+}
+
+/* Autofill Fix - Firefox */
+input:-moz-autofill {
+  box-shadow: 0 0 0px 1000px #161b22 inset !important;
+  color: #e0e0e0 !important;
+  background-color: #161b22 !important;
+  caret-color: #ffffff;
+}
+

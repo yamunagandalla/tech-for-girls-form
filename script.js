@@ -48,17 +48,18 @@ form.addEventListener("submit", e => {
   const screenshotFile = document.getElementById("screenshot").files[0];
   const screenshotName = screenshotFile ? screenshotFile.name : "Not uploaded";
 
-  const formData = new FormData();
-  formData.append("name", name);
-  formData.append("phone", phone);
-  formData.append("email", email);
-  formData.append("college", college);
-  formData.append("screenshotName", screenshotName);
+const data = new URLSearchParams();
+data.append("name", name);
+data.append("phone", phone);
+data.append("email", email);
+data.append("college", college);
+data.append("screenshotName", screenshotName);
 
-  fetch(scriptURL, {
-    method: "POST",
-    body: formData
-  })
+fetch(scriptURL, {
+  method: "POST",
+  body: data
+});
+
     .then(res => res.text())
     .then(response => {
       localStorage.setItem("submitted", "true");

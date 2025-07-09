@@ -48,27 +48,26 @@ form.addEventListener("submit", e => {
   const screenshotFile = document.getElementById("screenshot").files[0];
   const screenshotName = screenshotFile ? screenshotFile.name : "Not uploaded";
 
-const data = new URLSearchParams();
-data.append("name", name);
-data.append("phone", phone);
-data.append("email", email);
-data.append("college", college);
-data.append("screenshotName", screenshotName);
+  const data = new URLSearchParams();
+  data.append("name", name);
+  data.append("phone", phone);
+  data.append("email", email);
+  data.append("college", college);
+  data.append("screenshotName", screenshotName);
 
-fetch(scriptURL, {
-  method: "POST",
-  body: data
-});
-
-    .then(res => res.text())
-    .then(response => {
-      localStorage.setItem("submitted", "true");
-      form.querySelectorAll("input, button").forEach(el => el.disabled = true);
-      thankYouMsg.innerText = "🎉 Your submission has been recorded. Thanks for being part of Tech for Girls!";
-    })
-    .catch(error => {
-      alert("Something went wrong. Please try again later.");
-      submitBtn.disabled = false;
-      console.error("Error!", error.message);
-    });
+  fetch(scriptURL, {
+    method: "POST",
+    body: data
+  })
+  .then(res => res.text())
+  .then(response => {
+    localStorage.setItem("submitted", "true");
+    form.querySelectorAll("input, button").forEach(el => el.disabled = true);
+    thankYouMsg.innerText = "🎉 Your submission has been recorded. Thanks for being part of Tech for Girls!";
+  })
+  .catch(error => {
+    alert("Something went wrong. Please try again later.");
+    submitBtn.disabled = false;
+    console.error("Error!", error.message);
+  });
 });

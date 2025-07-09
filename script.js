@@ -11,7 +11,7 @@ let clickCount = 0;
 // Disable form if already submitted
 if (localStorage.getItem("submitted") === "true") {
   form.querySelectorAll("input, button").forEach(el => el.disabled = true);
-  thankYouMsg.innerText = "🎉 Your submission has been recorded. Thanks for being part of Tech for Girls!";
+  thankYouMsg.style.display = "block";
 }
 
 // WhatsApp Share Button
@@ -48,26 +48,26 @@ form.addEventListener("submit", e => {
   const screenshotFile = document.getElementById("screenshot").files[0];
   const screenshotName = screenshotFile ? screenshotFile.name : "Not uploaded";
 
-  const data = new URLSearchParams();
-  data.append("name", name);
-  data.append("phone", phone);
-  data.append("email", email);
-  data.append("college", college);
-  data.append("screenshotName", screenshotName);
+  const formData = new FormData();
+  formData.append("name", name);
+  formData.append("phone", phone);
+  formData.append("email", email);
+  formData.append("college", college);
+  formData.append("screenshotName", screenshotName);
 
   fetch(scriptURL, {
     method: "POST",
-    body: data
+    mode: "no-cors", // <--- Fix CORS issue from GitHub Pages
+    body: formData
   })
-  .then(res => res.text())
-  .then(response => {
-    localStorage.setItem("submitted", "true");
-    form.querySelectorAll("input, button").forEach(el => el.disabled = true);
-    thankYouMsg.innerText = "🎉 Your submission has been recorded. Thanks for being part of Tech for Girls!";
-  })
-  .catch(error => {
-    alert("Something went wrong. Please try again later.");
-    submitBtn.disabled = false;
-    console.error("Error!", error.message);
-  });
+    .then(() => {
+      localStorage.setItem("submitted", "true");
+      form.querySelectorAll("input, button").forEach(el => el.disabled = true);
+      thankYouMsg.style.display = "block";
+    })
+    .catch(error => {
+      alert("Something went wrong. Please try again later.");
+      console.error("Error!", error.message);
+      submitBtn.disabled = false;
+    });
 });

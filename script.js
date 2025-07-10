@@ -1,4 +1,4 @@
-const scriptURL = "https://script.google.com/macros/s/AKfycbxC7_VWMx1vUTwW9dInZaoU6dhi1jJn4lNnkCfiJvBizMdCqosxnixamxmm5BoMSwVH2A/exec";
+const scriptURL = "YOUR_GOOGLE_APPS_SCRIPT_WEB_APP_URL"; // replace this
 
 const form = document.getElementById("registrationForm");
 const whatsappBtn = document.getElementById("whatsappShareBtn");
@@ -8,11 +8,13 @@ const thankYouMsg = document.getElementById("thankYou");
 
 let clickCount = 0;
 
+// If already submitted
 if (localStorage.getItem("submitted") === "true") {
   form.querySelectorAll("input, button").forEach(el => el.disabled = true);
-  thankYouMsg.style.display = "block";
+  thankYouMsg.innerText = "🎉 Your submission has been recorded. Thanks for being part of Tech for Girls!";
 }
 
+// WhatsApp Share
 whatsappBtn.addEventListener("click", () => {
   if (clickCount < 5) {
     const message = encodeURIComponent("Hey Buddy, Join Tech For Girls Community ✨");
@@ -28,6 +30,7 @@ whatsappBtn.addEventListener("click", () => {
   }
 });
 
+// Submit Form
 form.addEventListener("submit", e => {
   e.preventDefault();
 
@@ -45,22 +48,22 @@ form.addEventListener("submit", e => {
   const screenshotFile = document.getElementById("screenshot").files[0];
   const screenshotName = screenshotFile ? screenshotFile.name : "Not uploaded";
 
-  const formData = new FormData();
-  formData.append("name", name);
-  formData.append("phone", phone);
-  formData.append("email", email);
-  formData.append("college", college);
-  formData.append("screenshotName", screenshotName);
+  const data = new URLSearchParams();
+  data.append("name", name);
+  data.append("phone", phone);
+  data.append("email", email);
+  data.append("college", college);
+  data.append("screenshotName", screenshotName);
 
   fetch(scriptURL, {
     method: "POST",
-    mode: "no-cors", // allow cross-origin from GitHub Pages
-    body: formData
+    body: data
   })
-    .then(() => {
+    .then(res => res.text())
+    .then(response => {
       localStorage.setItem("submitted", "true");
       form.querySelectorAll("input, button").forEach(el => el.disabled = true);
-      thankYouMsg.style.display = "block";
+      thankYouMsg.innerText = "🎉 Your submission has been recorded. Thanks for being part of Tech for Girls!";
     })
     .catch(error => {
       alert("Something went wrong. Please try again later.");

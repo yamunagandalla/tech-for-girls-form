@@ -1,4 +1,4 @@
-const scriptURL = "YOUR_GOOGLE_APPS_SCRIPT_WEB_APP_URL"; // replace this
+const scriptURL = "https://script.google.com/macros/s/AKfycbxC7_VWMx1vUTwW9dInZaoU6dhi1jJn4lNnkCfiJvBizMdCqosxnixamxmm5BoMSwVH2A/exec";
 
 const form = document.getElementById("registrationForm");
 const whatsappBtn = document.getElementById("whatsappShareBtn");
@@ -8,30 +8,27 @@ const thankYouMsg = document.getElementById("thankYou");
 
 let clickCount = 0;
 
-// If already submitted
-if (localStorage.getItem("submitted") === "true") {
-  form.querySelectorAll("input, button").forEach(el => el.disabled = true);
-  thankYouMsg.innerText = "🎉 Your submission has been recorded. Thanks for being part of Tech for Girls!";
-}
+// Reset for every session (remove previous lock)
+localStorage.removeItem("submitted");
 
-// WhatsApp Share
+// WhatsApp Sharing Logic
 whatsappBtn.addEventListener("click", () => {
   if (clickCount < 5) {
     const message = encodeURIComponent("Hey Buddy, Join Tech For Girls Community ✨");
     const whatsappURL = `https://wa.me/?text=${message}`;
     window.open(whatsappURL, "_blank");
-
     clickCount++;
     clickCounter.innerText = `Click count: ${clickCount}/5`;
 
     if (clickCount === 5) {
       clickCounter.innerText = "✅ Sharing complete. Please continue.";
+      whatsappBtn.disabled = true;
     }
   }
 });
 
-// Submit Form
-form.addEventListener("submit", e => {
+// Form Submit
+form.addEventListener("submit", (e) => {
   e.preventDefault();
 
   if (clickCount < 5) {
@@ -61,9 +58,12 @@ form.addEventListener("submit", e => {
   })
     .then(res => res.text())
     .then(response => {
-      localStorage.setItem("submitted", "true");
-      form.querySelectorAll("input, button").forEach(el => el.disabled = true);
+      form.reset();
+      clickCount = 0;
+      clickCounter.innerText = "Click count: 0/5";
+      whatsappBtn.disabled = false;
       thankYouMsg.innerText = "🎉 Your submission has been recorded. Thanks for being part of Tech for Girls!";
+      submitBtn.disabled = false;
     })
     .catch(error => {
       alert("Something went wrong. Please try again later.");

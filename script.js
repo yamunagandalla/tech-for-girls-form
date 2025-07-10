@@ -11,6 +11,7 @@ let clickCount = 0;
 // Enable form if not submitted
 if (localStorage.getItem("submitted") === "true") {
   thankYouMsg.innerText = "🎉 Your submission was already recorded.";
+  form.style.display = "none";  // Hide form if already submitted
 } else {
   form.querySelectorAll("input, button").forEach(el => el.disabled = false);
 }
@@ -65,8 +66,17 @@ form.addEventListener("submit", e => {
     .then(response => {
       if (response.includes("Success")) {
         localStorage.setItem("submitted", "true");
-        form.querySelectorAll("input, button").forEach(el => el.disabled = true);
-        thankYouMsg.innerText = "🎉 Your submission has been recorded. Thanks for being part of Tech for Girls!";
+
+        // Hide the form
+        form.style.display = "none";
+
+        // Show confirmation message
+        thankYouMsg.innerText = "🎉 Your submission has been recorded.\nThanks for being part of Tech for Girls!";
+
+        // Optional: Close the page after 5 seconds (only works in popups)
+        setTimeout(() => {
+          window.close();
+        }, 5000);
       } else {
         throw new Error("Unexpected response: " + response);
       }

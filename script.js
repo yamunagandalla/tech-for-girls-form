@@ -8,7 +8,7 @@ const thankYouMsg = document.getElementById("thankYou");
 
 let clickCount = 0;
 
-// ✅ Allow repeated form submissions (no localStorage block)
+// ✅ Always allow form to be used
 thankYouMsg.innerText = "";
 
 // WhatsApp Share Button
@@ -28,7 +28,7 @@ whatsappBtn.addEventListener("click", () => {
 });
 
 // Submit Form
-form.addEventListener("submit", e => {
+form.addEventListener("submit", (e) => {
   e.preventDefault();
 
   if (clickCount < 5) {
@@ -56,18 +56,21 @@ form.addEventListener("submit", e => {
     method: "POST",
     body: data
   })
-    .then(res => res.text())
-    .then(response => {
-      // ✅ No localStorage block — so can resubmit
-      form.reset();
-      thankYouMsg.innerText = "🎉 Your submission has been recorded. Thanks for being part of Tech for Girls!";
+    .then(response => response.text())
+    .then(text => {
+      if (text.includes("Success")) {
+        thankYouMsg.innerText = "🎉 Your submission has been recorded. Thanks for being part of Tech for Girls!";
+        form.reset();
+        clickCount = 0;
+        clickCounter.innerText = "Click count: 0/5";
+      } else {
+        alert("Form submission failed: " + text);
+      }
       submitBtn.disabled = false;
-      clickCount = 0;
-      clickCounter.innerText = "Click count: 0/5";
     })
-    .catch(error => {
-      alert("Something went wrong. Please try again later.");
+    .catch((error) => {
+      console.error("Error submitting form:", error);
+      alert("Something went wrong. Please try again.");
       submitBtn.disabled = false;
-      console.error("Error!", error.message);
     });
 });
